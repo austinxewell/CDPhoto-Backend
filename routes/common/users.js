@@ -20,8 +20,8 @@ router.get("/user/:id", async (req, res) => {
 });
 
 router.post("/user", async (req, res) => {
-  const { userName, email, password } = req.body;
-  const user = await createUser(userName, email, password);
+  const { user_full_name, user_email, user_password } = req.body;
+  const user = await createUser(user_full_name, user_email, user_password);
   res.status(201).send(user);
 });
 
