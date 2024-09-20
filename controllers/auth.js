@@ -24,6 +24,11 @@ export async function loginAuth(user_email, user_password) {
   } else {
     const user = { name: results[0].user_full_name };
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    return { message: "Successfully Logged In", access_token: accessToken };
+    const full_user_details = results[0];
+    return {
+      message: "Successfully Logged In",
+      access_token: accessToken,
+      user: full_user_details,
+    };
   }
 }
