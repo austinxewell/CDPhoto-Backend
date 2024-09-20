@@ -5,21 +5,22 @@ import {
   createUser,
   deleteUser,
 } from "../../database/common/userQueries.js";
+import { authenticateToken } from "../../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/users", async (req, res) => {
+router.get("/users", authenticateToken, async (req, res) => {
   const users = await getUsers();
   res.send(users);
 });
 
-router.get("/user/:id", async (req, res) => {
+router.get("/user/:id", authenticateToken, async (req, res) => {
   const id = req.params.id;
   const user = await getUser(id);
   res.send(user);
 });
 
-router.post("/user", async (req, res) => {
+router.post("/user", authenticateToken, async (req, res) => {
   const { user_full_name, user_email, user_password, confirm_password } =
     req.body;
   const user = await createUser(
@@ -31,7 +32,7 @@ router.post("/user", async (req, res) => {
   res.status(201).send(user);
 });
 
-router.delete("/user/:id", async (req, res) => {
+router.delete("/user/:id", authenticateToken, async (req, res) => {
   const id = req.params.id;
   await deleteUser(id);
   res.send(`User with ID:${id} has been permanently deleted`);

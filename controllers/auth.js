@@ -1,5 +1,9 @@
 import pool from "../database/config.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 export async function loginAuth(user_email, user_password) {
   const [results] = await pool.query(
@@ -18,7 +22,8 @@ export async function loginAuth(user_email, user_password) {
   if (!isMatch) {
     return { message: "Invalid Password" };
   } else {
-    // Send JWT
-    return { message: "Successfully Logged In" };
+    const user = { name: results[0].user_full_name };
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    return { message: "Successfully Logged In", access_token: accessToken };
   }
 }
