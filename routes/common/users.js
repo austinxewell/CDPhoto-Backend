@@ -9,12 +9,12 @@ import { authenticateToken } from "../../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/users", authenticateToken, async (req, res) => {
+router.get("/users", async (req, res) => {
   const users = await getUsers();
   res.send(users);
 });
 
-router.get("/user/:id", authenticateToken, async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   const id = req.params.id;
   const user = await getUser(id);
   res.send(user);

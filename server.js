@@ -1,8 +1,18 @@
 import express from "express";
+import cors from "cors"; // Import CORS
 import apiRoutes from "./routes/index.js";
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+
+// Use CORS middleware
+const corsOptions = {
+  origin: "http://localhost:3000", // Allow your frontend app
+  methods: ["GET", "POST", "DELETE"], // Specify the methods allowed
+  allowedHeaders: ["Content-Type"], // Specify headers allowed
+};
+
+app.use(cors(corsOptions)); // Use CORS with options
 
 app.use(express.json());
 

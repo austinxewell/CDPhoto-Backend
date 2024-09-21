@@ -1,6 +1,7 @@
 import pool from "../database/config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { getUsers } from "../database/common/userQueries.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -30,5 +31,35 @@ export async function loginAuth(user_email, user_password) {
       access_token: accessToken,
       user: full_user_details,
     };
+  }
+}
+
+export async function authenticateToken(token) {
+  if (!token) {
+    return { message: "No token provided" };
+  }
+
+  try {
+    // Wrap jwt.verify in a promise
+    const decoded = await new Promise((resolve, reject) => {
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+          return reject(err); // Reject the promise if token verification fails
+        }
+        resolve(decoded); // Resolve the promise with the decoded token
+      });
+    });
+
+    const users = await getUsers();
+
+    const user = users.find((user) => user.user_full_name === decoded.name);
+
+    if (!user) {
+      return { message: "User not found" };
+    }
+
+    return { accessToken: token, user: user };
+  } catch (err) {
+    return { message: "Invalid token" };
   }
 }
