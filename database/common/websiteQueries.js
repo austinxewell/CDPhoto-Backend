@@ -5,7 +5,7 @@ export async function getWebsiteInfo() {
     `
       SELECT *
       FROM website
-      WHERE id = 1
+      WHERE website_id = 1
     `
   );
   return rows[0];
