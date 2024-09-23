@@ -56,8 +56,8 @@ export async function createUser(
       message: `User "${user_full_name}" was successfully created`,
       user: createdUser || {},
     };
-  } catch (error) {
-    console.error("Error inserting user:", error);
+  } catch (err) {
+    console.error("Error inserting user:", err);
     throw new Error("User creation failed");
   }
 }

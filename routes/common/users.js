@@ -1,11 +1,11 @@
 import express from "express";
+import { authenticateToken } from "../../middleware/auth.js";
 import {
   getUser,
   getUsers,
   createUser,
   deleteUser,
 } from "../../database/common/userQueries.js";
-import { authenticateToken } from "../../middleware/auth.js";
 
 const router = express.Router();
 
