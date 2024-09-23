@@ -11,6 +11,17 @@ export async function getWebsiteEmail() {
   return results[0];
 }
 
+export async function getWebsitePhoneNumber() {
+  const [results] = await pool.query(
+    `
+    SELECT website_phone_number
+    FROM website
+    `
+  );
+
+  return results[0];
+}
+
 export async function getSocialLinks() {
   const [results] = await pool.query(
     `
