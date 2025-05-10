@@ -141,3 +141,9 @@ MIT License. See [LICENSE](https://opensource.org/licenses/MIT) for full details
 **Austin Ewell**  
 Front End Developer | Backend Architect  
 🔗 [GitHub](https://github.com/austinxewell)
+
+---
+
+## Front End Repository
+
+For information about the Front End, please visit the [Front End GitHub Repository](https://github.com/austinxewell/crysta-diane-photo-2.0).
