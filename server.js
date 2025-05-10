@@ -9,7 +9,8 @@ const app = express();
 const corsOptions = {
   origin: "http://localhost:3000", // Allow your frontend app
   methods: ["GET", "POST", "DELETE"], // Specify the methods allowed
-  allowedHeaders: ["Content-Type"], // Specify headers allowed
+  allowedHeaders: ["Content-Type", "Authorization"], // Allow Authorization header
+  credentials: true, // Allow credentials (cookies)
 };
 
 app.use(cors(corsOptions)); // Use CORS with options

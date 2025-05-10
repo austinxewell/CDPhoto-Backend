@@ -36,30 +36,32 @@ export async function loginAuth(user_email, user_password) {
 
 export async function authenticateToken(token) {
   if (!token) {
+    console.error("No token provided");
     return { message: "No token provided" };
   }
 
   try {
-    // Wrap jwt.verify in a promise
     const decoded = await new Promise((resolve, reject) => {
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err) {
-          return reject(err); // Reject the promise if token verification fails
+          console.error("Token verification error:", err); // Log the error
+          return reject(err);
         }
-        resolve(decoded); // Resolve the promise with the decoded token
+        resolve(decoded);
       });
     });
 
     const users = await getUsers();
-
     const user = users.find((user) => user.user_full_name === decoded.name);
 
     if (!user) {
+      console.error("User not found for name:", decoded.name);
       return { message: "User not found" };
     }
 
     return { accessToken: token, user: user };
   } catch (err) {
+    console.error("Token error:", err);
     return { message: "Invalid token" };
   }
 }
